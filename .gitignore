@@ -1,0 +1,11 @@
+# Documentation
+docs/build
+
+# The rest
+.vscode
+.venv
+.ipynb_checkpoints
+example_data
+.DS_Store
+*.csv
+spectroscopy
