@@ -18,7 +18,11 @@ Inside the cloned directory type following commands to install JupyterLab, neede
 
 Then install all required packages with (still inside the cloned directory)
 
-    julia --project="./" -e 'using Pkg; Pkg.instantiate();'
+    julia --project="./" -e 'using Pkg; Pkg.instantiate()'
+
+As a quick check, running the following should produce the Earth radius without error messages:
+
+    julia --project="./" -e 'using RetrievalToolbox; println(EARTH_RADIUS)'
 
 3. Download auxiliary data (spectroscopy, example measurements, solar spectrum)
 
@@ -30,6 +34,6 @@ The demo requires additional data to be downloaded from a Zenodo repository. Run
 
 ## Launch the demo notebook
 
-    julia
-    using IJulia
-    IJulia.jupyterlab(dir=pwd())
+    julia # Start Julia REPL
+    julia> using IJulia # Import IJulia module
+    julia> IJulia.jupyterlab(dir=pwd()) # Launch JupyterLab
