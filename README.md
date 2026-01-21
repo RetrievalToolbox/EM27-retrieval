@@ -12,11 +12,7 @@ Download the Julia version multiplexer `JuliaUp` via
 
 2. Instantiate the environment
 
-Inside the cloned directory type following commands to install JupyterLab, needed to run the demo notebook.
-
-    julia -e 'using Pkg(); Pkg.install("IJulia")'
-
-Then install all required packages with (still inside the cloned directory)
+Inside the cloned directory type following commands to install all required packages:
 
     julia --project="./" -e 'using Pkg; Pkg.instantiate()'
 
