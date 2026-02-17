@@ -54,6 +54,14 @@ spec_md5[12]="9b8a99159a864dba45be5a203265c230"
 spec_md5[13]="2407dd792aa4dc02cf0851783a11db7f"
 
 
+# Create spectroscopy if not there
+if [ ! -d "spectroscopy" ]; then
+    echo "Creating spectroscopy subdirectory.."
+    mkdir -p spectroscopy
+else
+    echo "spectroscopy subdirectory already exists.."
+fi
+
 fcount=0
 for fname in "${spec_fnames[@]}"; do
 
