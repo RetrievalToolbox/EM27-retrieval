@@ -234,24 +234,17 @@ function copy_map_to_atmosphere!(
     # `map` is a dictionary with Unitful arrays, so we can do unit conversions here!
 
     # MET pressure grid
-    @views atm.met_pressure_levels[:] = ustrip.(Ref(atm.met_pressure_unit), copy(map["Pressure"]))
-    @views atm.met_pressure_layers[:] = RE.levels_to_layers(atm.met_pressure_levels)
-
+    @views atm.met_pressure[:] = ustrip.(Ref(atm.met_pressure_unit), copy(map["Pressure"]))
+    
     # MET temperature grid
-    @views atm.temperature_levels[:] = ustrip.(Ref(atm.temperature_unit), copy(map["Temp"]))
-    @views atm.temperature_layers[:] = RE.levels_to_layers(atm.temperature_levels)
-
+    @views atm.temperature[:] = ustrip.(Ref(atm.temperature_unit), copy(map["Temp"]))
+    
     # Calculate SH from H2O
     sh = RE.H2O_VMR_to_specific_humidity.(map["h2o"])
-    @views atm.specific_humidity_levels[:] = ustrip.(Ref(atm.specific_humidity_unit), sh)
-    @views atm.specific_humidity_layers[:] = RE.levels_to_layers(atm.specific_humidity_levels)
-
+    @views atm.specific_humidity[:] = ustrip.(Ref(atm.specific_humidity_unit), sh)
+    
     # Compute altitude and gravity
     RE.calculate_altitude_and_gravity!(scene)
-
-    # .. and mid-layer values
-    atm.gravity_layers[:] = RE.levels_to_layers(atm.gravity_levels)
-    atm.altitude_layers[:] = RE.levels_to_layers(atm.altitude_levels)
 
 end
 

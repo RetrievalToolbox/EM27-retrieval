@@ -15,17 +15,17 @@ function process_spectrum(
    
     N_sv = length(state_vector)
 
-    # Copy the contents of the MAP dictionary into the atmosphere, such
-    # that we start we a fresh atmosphere every time.
-    copy_map_to_atmosphere!(buf.scene, map_atm);
-
     # Create the retrieval grid, based on the surface pressure
     plevels = RE.create_UoL_pressure_grid(psurf, 400.0u"hPa", N_total=buf.scene.atmosphere.N_level)
     RE.ingest!(buf.scene.atmosphere, :pressure_levels, plevels)
-        
+
+    # Copy the contents of the MAP dictionary into the atmosphere, such
+    # that we start we a fresh atmosphere every time.
+    copy_map_to_atmosphere!(buf.scene, map_atm);
+    
     # Calculate altitude and gravity levels - this needs to be done internally, since
     # we must have the values for the finer MET grid, rather than the retrieval grid
-    RE.calculate_altitude_and_gravity!(buf.scene)
+    #RE.calculate_altitude_and_gravity!(buf.scene)
 
     # Calculate layer quantities (from level quantities)
     RE.calculate_layers!(buf.scene.atmosphere)
