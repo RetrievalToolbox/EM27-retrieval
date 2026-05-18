@@ -10,7 +10,9 @@ if [ -f "solar_merged_20240731_600_33300_000.out" ]; then
     echo "Solar model file exists. Skip download."
 else
     echo "Downloading solar model data from JPL."
-    wget https://mark4sun.jpl.nasa.gov/toon/solar/solar_merged_20240731_600_33300_000.out.gz
+    # The website by G. Toon apparently lacks a certificate
+    # (use this at your own discretion!)
+    wget --no-check-certificate https://mark4sun.jpl.nasa.gov/toon/solar/solar_merged_20240731_600_33300_000.out.gz
     gunzip solar_merged_20240731_600_33300_000.out.gz
 fi
 
