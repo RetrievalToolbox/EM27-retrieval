@@ -8,7 +8,7 @@ After cloning this repository, perform the following steps.
 
 Download the Julia version multiplexer `JuliaUp` via
 
-    curl -fsSL https://install.julialang.org
+    curl -fsSL https://install.julialang.org | sh
 
 2. Instantiate the environment
 
