@@ -71,7 +71,7 @@ for fname in "${spec_fnames[@]}"; do
     if [ -f "spectroscopy/${fname}" ]; then
 
         # Check MD5
-        if echo "$spec_md[$fcount]" spectroscopy/${fname} | md5sum --status -c -; then
+        if echo "${spec_md[$fcount]}" spectroscopy/${fname} | md5sum --status -c -; then
             echo "MD5 check successful for ${fname}"
         else
             echo "MD5 check failed!!! Manually delete and re-download ${fname}!"
