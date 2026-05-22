@@ -36,9 +36,9 @@
         - name: "CO2"
           ABSCO: "./spectroscopy/CO2_06100-06450_v0.0_ABSCO.nc"
           unit: "ppm"
-        - name: "CH4"
-          ABSCO: "./spectroscopy/CH4_06100-06450_v0.0_ABSCO.nc"
-          unit: "ppb"
+        #- name: "CH4"
+        #  ABSCO: "./spectroscopy/CH4_06100-06450_v0.0_ABSCO.nc"
+        #  unit: "ppb"
 
 4:
     name: "CH4"
@@ -68,12 +68,8 @@
           ABSCO: "./spectroscopy/H2O_04780-04940_v0.0_ABSCO.nc"
           unit: "1"
         - name: "CO2"
-          ABSCO: "./spectroscopy/CO2_04780-04940_v0.0_ABSCO.nc"
+          ABSCO: "../spectroscopy/co2_v52.hdf"
           unit: "ppm"
-        #- name: "CO2"
-        #  ABSCO: "../OCO-SIF/data/co2_v52.hdf"
-        #  unit: "ppm"
-        #  scale_factor: 1.004
 
 6:
     name: "CH4_S5P"
