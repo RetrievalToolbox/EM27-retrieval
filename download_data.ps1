@@ -16,10 +16,9 @@ if (Test-Path -Path "solar_merged_20240731_600_33300_000.out") {
     Write-Host "Downloading solar model data from JPL."
     # The website by G. Toon apparently lacks a certificate
     # (use this at your own discretion!)
-    $ProgressPreference = 'SilentlyContinue'
+    #$ProgressPreference = 'SilentlyContinue'
     Invoke-WebRequest -Uri "https://mark4sun.jpl.nasa.gov/toon/solar/solar_merged_20240731_600_33300_000.out.gz" `
-        -OutFile "solar_merged_20240731_600_33300_000.out.gz" `
-        -SkipCertificateCheck
+        -OutFile "solar_merged_20240731_600_33300_000.out.gz"
 
     # Extract gz file
     $gzipFile = "solar_merged_20240731_600_33300_000.out.gz"
@@ -92,7 +91,7 @@ function Get-MD5Hash {
 }
 
 # Download spectroscopy files
-$ProgressPreference = 'SilentlyContinue'
+#$ProgressPreference = 'SilentlyContinue'
 for ($i = 0; $i -lt $spec_fnames.Count; $i++) {
     $fname = $spec_fnames[$i]
     $spec_path = ".\spectroscopy\${fname}"
