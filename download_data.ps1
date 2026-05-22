@@ -14,8 +14,7 @@ if (Test-Path -Path "solar_merged_20240731_600_33300_000.out") {
     Write-Host "Solar model file exists. Skip download."
 } else {
     Write-Host "Downloading solar model data from JPL."
-    # The website by G. Toon apparently lacks a certificate
-    # (use this at your own discretion!)
+
     #$ProgressPreference = 'SilentlyContinue'
     Invoke-WebRequest -Uri "https://mark4sun.jpl.nasa.gov/toon/solar/solar_merged_20240731_600_33300_000.out.gz" `
         -OutFile "solar_merged_20240731_600_33300_000.out.gz"
