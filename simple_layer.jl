@@ -312,7 +312,9 @@ function plot_latest_iteration(solver, buf)
     xlabel!("Wavenumber [cm\$^{-1}\$]", subplot=2, font=(10, "FreeSerif"))
     display(p)
 
-    RE.print_state_vector_update(solver.state_vector);
+    if RE.get_iteration_count(solver) > 1
+        RE.print_state_vector_update(solver.state_vector);
+    end
 
 end
 
@@ -334,20 +336,22 @@ function plot_timeseries(result_dict)
     if "CO2" in keys(result_dict)
         p = plot()
         scatter!(p, result_dict["Date"], result_dict["CO2"] * 1e6, markershape=:circle, label="GSFC", size=(1000, 300))
-        plot!(p, df_ref.Date, df_ref.var" XCO2_STR", markershape=:star, label="PROFFAST XCO2_STR")
+        scatter!(p, df_ref.Date, df_ref.var" XCO2_STR", markershape=:star, label="PROFFAST XCO2_STR")
         scatter!(p, df_ref.Date, df_ref.var" XCO2", markershape=:square, label="PROFFAST XCO2")
         #plot!(p, twinx(), result_dict["Date"], 1 ./ cosd.(result_dict["SZA"]), yaxis = "Airmass",
         #    color=:black, label=nothing, linewidth=2)
+        ylabel!("[ppm]")
         title!("XCO2")
         display(p)
     end
 
     if "H2O" in keys(result_dict)
         p = plot()
-        scatter!(p, result_dict["Date"], result_dict["H2O"] * 1e6, markershape=:circle, label="GSFC", size=(900, 300))
+        scatter!(p, result_dict["Date"], result_dict["H2O"] * 1e6, markershape=:circle, label="GSFC", size=(1000, 300))
         scatter!(p, df_ref.Date, df_ref.var" XH2O", markershape=:square, label="PROFFAST")
         #plot!(p, twinx(), result_dict["Date"], 1 ./ cosd.(result_dict["SZA"]), yaxis = "Airmass",
         #    color=:black, label="Airmass", linewidth=2)
+        ylabel!("[1]")
         title!("XH2O")
         display(p)
     end
@@ -359,6 +363,7 @@ function plot_timeseries(result_dict)
         scatter!(p, df_ref.Date, df_ref.var" XCH4_S5P" * 1e3, markershape=:square, label="PROFFAST")
         #plot!(p, twinx(), result_dict["Date"], 1 ./ cosd.(result_dict["SZA"]), yaxis = "Airmass",
         #    color=:black, label="Airmass", linewidth=2)
+        ylabel!("[ppb]")
         title!("XCH4")
         display(p)
     end
@@ -369,6 +374,7 @@ function plot_timeseries(result_dict)
         scatter!(p, df_ref.Date, df_ref.var" XCO" * 1e3, markershape=:square, label="PROFFAST")
         #plot!(p, twinx(), result_dict["Date"], 1 ./ cosd.(result_dict["SZA"]), yaxis = "Airmass",
         #    color=:black, label="Airmass", linewidth=2)
+        ylabel!("[ppb]")
         title!("XCO")
         display(p)
     end
@@ -378,7 +384,27 @@ function plot_timeseries(result_dict)
         plot!(p, result_dict["Date"], result_dict["O2"], markershape=:circle, label="GSFC", size=(1000, 300))
         #plot!(p, twinx(), result_dict["Date"], 1 ./ cosd.(result_dict["SZA"]), yaxis = "Airmass",
         #    color=:green, label=nothing, linewidth=2)
+        ylabel!("[1]")
         title!("XO2")
+        display(p)
+    end
+
+end
+
+
+function plot_gas_profiles(buf)
+
+    for gas in buf.scene.atmosphere.atm_elements
+        !(gas isa RE.GasAbsorber) && continue
+        p = plot(size=(400, 400))
+        plot!(
+            gas.vmr_levels,
+            buf.scene.atmosphere.pressure_levels,
+            linewidth=2, label=nothing, markershape=:circle
+        )
+        yflip!()
+        xlabel!("$(gas) [$(gas.vmr_unit)]")
+        ylabel!("Pressure levels [$(buf.scene.atmosphere.pressure_unit)]")
         display(p)
     end
 

@@ -396,7 +396,9 @@ function create_gases(
         
         for spec in keys(d[idx]["spectroscopy"])
 
-            @info "Loading $(d[idx]["spectroscopy"][spec]["ABSCO"])"
+            spec_fname = d[idx]["spectroscopy"][spec]["ABSCO"]
+            
+            @info "Loading $(spec_fname)"
         
             if haskey(d[idx]["spectroscopy"][spec], "scale_factor")
                 scale_factor = convert(
@@ -408,11 +410,19 @@ function create_gases(
             end
 
             # Read in the ABSCO
-            absco = RE.load_ABSCOAER_spectroscopy(
-                d[idx]["spectroscopy"][spec]["ABSCO"],
-                spectral_unit=:Wavenumber,
-                scale_factor=scale_factor
-            )
+            if occursin(".nc", spec_fname)
+                absco = RE.load_ABSCOAER_spectroscopy(
+                    spec_fname,
+                    spectral_unit=:Wavenumber,
+                    scale_factor=scale_factor
+                )
+            else
+                absco = RE.load_ABSCO_spectroscopy(
+                    spec_fname,
+                    spectral_unit=:Wavenumber,
+                    scale_factor=scale_factor
+                )
+            end
 
             # parse the units
             this_unit_str = d[idx]["spectroscopy"][spec]["unit"]
